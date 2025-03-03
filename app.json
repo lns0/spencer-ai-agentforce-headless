@@ -1,0 +1,32 @@
+{
+  "name": "Next.js app with Agentforce",
+  "description": "Next.js app with Agentforce headless agent",
+  "repository": "https://github.com/misu007/nextAppWithAgentforce",
+  "logo": "https://node-js-sample-1234567890ab.herokuapp.com/node.png",
+  "env": {
+    "MY_DOMAIN_URL": {
+      "description": "My Domain URL",
+      "value": ""
+    },
+    "AGENT_ID": {
+      "description": "Agent ID",
+      "value": ""
+    },
+    "CLIENT_ID": {
+      "description": "Client ID for Salesforce External App",
+      "value": ""
+    },
+    "CLIENT_SECRET": {
+      "description": "Client Secret for Salesforce External App",
+      "value": ""
+    },
+    "BASIC_AUTH_USERNAME": {
+      "description": "Username for BASIC Auth",
+      "value": ""
+    },
+    "BASIC_AUTH_PASSWORD": {
+      "description": "Password for BASIC Auth",
+      "value": ""
+    }
+  }
+}
