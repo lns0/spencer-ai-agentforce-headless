@@ -49,8 +49,8 @@ SF_AGENT_ID=XXXXXXXXX
 SF_CONSUMER_KEY=XXXXXXXXXXXXXX
 SF_CONSUMER_SECRET=XXXXXXXXXXXXXX
 SF_MY_DOMAIN_URL=XXXXXXXXXX
-BASIC_AUTH_USERNAME=(Set an optional username which is required to enter to open this app)
-BASIC_AUTH_PASSWORD=(Set an optional password which is required to enter to open this app)
+BASIC_AUTH_USERNAME=(Set an optional username which is required to open this app)
+BASIC_AUTH_PASSWORD=(Set an optional password which is required to open this app)
 ```
 
 5.  Start a development server:
