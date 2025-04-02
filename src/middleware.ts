@@ -3,14 +3,10 @@ import { NextRequest, NextResponse } from "next/server";
 const USERNAME: string = process.env.BASIC_AUTH_USERNAME ?? "";
 const PASSWORD: string = process.env.BASIC_AUTH_PASSWORD ?? "";
 
-export const config = {
-  matcher: ["/", "/chat"],
-};
-
 export function middleware(req: NextRequest) {
   if (!USERNAME || !PASSWORD) {
     return NextResponse.json(
-      { error: "Basic認証設定エラー" },
+      { error: "Basic Auth Error" },
       {
         headers: { "WWW-Authenticate": 'Basic realm="Secure Area"' },
         status: 401,
@@ -28,7 +24,7 @@ export function middleware(req: NextRequest) {
     }
   }
   return NextResponse.json(
-    { error: "Basic認証エラー" },
+    { error: "Basic Auth Error" },
     {
       headers: { "WWW-Authenticate": 'Basic realm="Secure Area"' },
       status: 401,
