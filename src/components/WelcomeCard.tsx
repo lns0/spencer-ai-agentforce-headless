@@ -7,6 +7,7 @@ import Image from "next/image";
 
 export default function WelcomeCard() {
   const [welcomeMessage, setWelcomeMessage] = useState<string>("");
+  const [sessionId, setSessionId] = useState<string>("");
   const router = useRouter();
 
   useEffect(() => {
@@ -14,13 +15,14 @@ export default function WelcomeCard() {
   }, []);
 
   const doInit = async () => {
-    const session = await newSession();
-    const message = session.messages[0].message;
+    const { sessionId, messages } = await newSession();
+    setSessionId(sessionId);
+    const message = messages[0].message;
     setWelcomeMessage(message);
   };
 
   const postedMessage = (message: string) => {
-    router.push(`/chat?message=${message}`);
+    router.push(`/chat/${sessionId}?message=${message}`);
   };
   return (
     <div className="flex items-center justify-items-center h-full w-full sm:w-4/5 md:w-3/5 lg:w-3/5 xl:w-1/2">

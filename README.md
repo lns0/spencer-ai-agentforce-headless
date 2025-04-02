@@ -2,8 +2,6 @@
 
 This is a Next.js demo app showcasing the integration with Salesforce Agentforce using the Agent API.
 
-> Note: Agent API is currently in the pilot
-
 ## Tech Stack
 
 - **UI Framework**: Next.js

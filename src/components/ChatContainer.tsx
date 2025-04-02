@@ -1,6 +1,7 @@
 "use client";
 import { useState, useMemo, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import ChatPublisher from "@/components/ChatPublisher";
 import ChatMessage from "@/components/ChatMessage";
 import type { Message } from "@/types/globals";
@@ -22,6 +23,8 @@ export default function ChatContainer({ welcomeMessage }: Props) {
   const [isAiTyping, setAiTyping] = useState<boolean>(false);
   const searchParams = useSearchParams();
   const userMessage = searchParams.get("message");
+  const params = useParams<{ sessionId: string }>();
+  const sessionId = params.sessionId;
 
   const aiInput: string = useMemo(() => {
     if (inputChunks && inputChunks.length > 0) {
@@ -106,6 +109,7 @@ export default function ChatContainer({ welcomeMessage }: Props) {
     await sendStreamingMessage({
       userMessage,
       sequenceId,
+      sessionId,
       onSSEProgressIndicator,
       onSSETextChunk,
       onSSEInform,

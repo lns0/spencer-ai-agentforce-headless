@@ -3,6 +3,7 @@
 type Props = {
   userMessage: string;
   sequenceId: number;
+  sessionId: string;
   onSSEProgressIndicator: (message: string) => void;
   onSSETextChunk: (message: string, offset: number) => void;
   onSSEInform: (message: string) => void;
@@ -12,6 +13,7 @@ type Props = {
 export const sendStreamingMessage = async ({
   userMessage,
   sequenceId,
+  sessionId,
   onSSEProgressIndicator,
   onSSETextChunk,
   onSSEInform,
@@ -25,6 +27,7 @@ export const sendStreamingMessage = async ({
     body: JSON.stringify({
       message: userMessage,
       sequenceId,
+      sessionId,
     }),
   });
   const reader = res.body?.getReader();
@@ -35,6 +38,7 @@ export const sendStreamingMessage = async ({
       if (done) break;
       if (!value) continue;
       const lines = decoder.decode(value).split(/\n/);
+      if (lines.length !== 5) continue;
       const jsonData = JSON.parse(lines[2].replace(/^data:\s*/, ""));
       console.log(jsonData);
       const { type, message } = jsonData.message;
