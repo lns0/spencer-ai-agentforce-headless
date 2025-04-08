@@ -4,3 +4,8 @@ export type Message = {
   aiStatus?: string;
   isTyping?: boolean;
 };
+
+export type TextChunk = {
+  chunk: string;
+  offset: number;
+};

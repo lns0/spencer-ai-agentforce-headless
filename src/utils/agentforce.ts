@@ -27,6 +27,7 @@ const getToken = async () => {
   const apiInstanceUrl = data["api_instance_url"];
   return { accessToken, apiInstanceUrl };
 };
+
 export const newSession = async () => {
   const { accessToken, apiInstanceUrl } = await getToken();
   const uuid = crypto.randomUUID();
@@ -57,14 +58,8 @@ export const newSession = async () => {
   return data;
 };
 
-export const getSession = async () => {
-  const session = await newSession();
-  console.log("session", session);
-  return session;
-};
-export const endSession = async () => {
+export const endSession = async (sessionId: string) => {
   const { accessToken, apiInstanceUrl } = await getToken();
-  const { sessionId } = await getSession();
   try {
     const res = await fetch(
       `${apiInstanceUrl}/einstein/ai-agent/v1/sessions/${sessionId}`,

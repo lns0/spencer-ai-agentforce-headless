@@ -4,19 +4,10 @@ import { useSearchParams } from "next/navigation";
 import { useParams } from "next/navigation";
 import ChatPublisher from "@/components/ChatPublisher";
 import ChatMessage from "@/components/ChatMessage";
-import type { Message } from "@/types/globals";
+import type { Message, TextChunk } from "@/types/globals";
 import { sendStreamingMessage } from "@/utils/sse";
 
-type Props = {
-  welcomeMessage: string;
-};
-
-type TextChunk = {
-  chunk: string;
-  offset: number;
-};
-
-export default function ChatContainer({ welcomeMessage }: Props) {
+export default function ChatContainer() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputChunks, setInputChunks] = useState<TextChunk[]>([]);
   const [aiStatus, setAiStatus] = useState<string>("");
@@ -42,10 +33,9 @@ export default function ChatContainer({ welcomeMessage }: Props) {
   useEffect(() => {
     setMessages([]);
     setInputChunks([]);
-    addMessage("ai", welcomeMessage);
     if (userMessage) postedMessage(userMessage);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [welcomeMessage, userMessage]);
+  }, [userMessage]);
 
   useEffect(() => {
     setAiStatus("");
@@ -90,30 +80,30 @@ export default function ChatContainer({ welcomeMessage }: Props) {
     ]);
   };
 
-  const onSSEProgressIndicator = (message: string) => {
+  const onProgress = (message: string) => {
     setAiStatus(message);
   };
-  const onSSETextChunk = (chunk: string, offset: number) => {
+  const onChunk = (chunk: string, offset: number) => {
     addChunk(chunk, offset);
   };
-  const onSSEInform = (message: string) => {
+  const onInform = (message: string) => {
     setAiTyping(false);
     addMessage("ai", message);
   };
-  const onSSEEndOfTurn = () => {
+  const onComplete = () => {
     setAiTyping(false);
   };
 
   const handlePostMessage = async (userMessage: string, sequenceId: number) => {
     setAiTyping(true);
     await sendStreamingMessage({
-      userMessage,
+      text: userMessage,
       sequenceId,
       sessionId,
-      onSSEProgressIndicator,
-      onSSETextChunk,
-      onSSEInform,
-      onSSEEndOfTurn,
+      onProgress,
+      onChunk,
+      onInform,
+      onComplete,
     });
   };
 
