@@ -4,8 +4,8 @@ import { useSearchParams } from "next/navigation";
 import { useParams } from "next/navigation";
 import ChatPublisher from "@/components/ChatPublisher";
 import ChatMessage from "@/components/ChatMessage";
-import type { Message, TextChunk } from "@/types/globals";
-import { sendStreamingMessage } from "@/utils/sse";
+import type { Message, TextChunk, StreamingEvent } from "@/types/globals";
+import { sendStreamingMessage } from "@/utils/chatClient";
 
 export default function ChatContainer() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -80,18 +80,24 @@ export default function ChatContainer() {
     ]);
   };
 
-  const onProgress = (message: string) => {
-    setAiStatus(message);
-  };
-  const onChunk = (chunk: string, offset: number) => {
-    addChunk(chunk, offset);
-  };
-  const onInform = (message: string) => {
-    setAiTyping(false);
-    addMessage("ai", message);
-  };
-  const onComplete = () => {
-    setAiTyping(false);
+  const onEvent = (streamingEvent: StreamingEvent) => {
+    const { offset } = streamingEvent;
+    const { type, message } = streamingEvent.message;
+    switch (type) {
+      case "ProgressIndicator":
+        setAiStatus(message);
+        break;
+      case "TextChunk":
+        addChunk(message, offset);
+        break;
+      case "Inform":
+        setAiTyping(false);
+        addMessage("ai", message);
+        break;
+      case "EndOfTurn":
+        setAiTyping(false);
+        break;
+    }
   };
 
   const handlePostMessage = async (userMessage: string, sequenceId: number) => {
@@ -100,10 +106,7 @@ export default function ChatContainer() {
       text: userMessage,
       sequenceId,
       sessionId,
-      onProgress,
-      onChunk,
-      onInform,
-      onComplete,
+      onEvent,
     });
   };
 

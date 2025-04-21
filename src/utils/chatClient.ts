@@ -1,23 +1,18 @@
 "use client";
+import type { StreamingEvent } from "@/types/globals";
 
 type StreamingMessageProps = {
   text: string;
   sequenceId: number;
   sessionId: string;
-  onProgress: (message: string) => void;
-  onChunk: (message: string, offset: number) => void;
-  onInform: (message: string) => void;
-  onComplete: () => void;
+  onEvent: (streamingEvent: StreamingEvent) => void;
 };
 
 export const sendStreamingMessage = async ({
   text,
   sequenceId,
   sessionId,
-  onProgress,
-  onChunk,
-  onInform,
-  onComplete,
+  onEvent,
 }: StreamingMessageProps) => {
   try {
     const res = await fetch("/api/message", {
@@ -51,23 +46,8 @@ export const sendStreamingMessage = async ({
       if (lines.length !== 5) continue;
 
       try {
-        const eventData = JSON.parse(lines[2].replace(/^data:\s*/, ""));
-        const { type, message } = eventData.message;
-
-        switch (type) {
-          case "ProgressIndicator":
-            onProgress(message);
-            break;
-          case "TextChunk":
-            onChunk(message, eventData.offset);
-            break;
-          case "Inform":
-            onInform(message);
-            break;
-          case "EndOfTurn":
-            onComplete();
-            break;
-        }
+        const streamingEvent = JSON.parse(lines[2].replace(/^data:\s*/, ""));
+        onEvent(streamingEvent);
       } catch (error) {
         console.error("Error parsing SSE data:", error);
       }

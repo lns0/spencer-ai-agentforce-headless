@@ -85,6 +85,13 @@ export const sendStreamingMessage = async (
   sequenceId: number
 ) => {
   const { accessToken, apiInstanceUrl } = await getToken();
+  const payload = {
+    message: {
+      sequenceId,
+      type: "Text",
+      text,
+    },
+  };
   const res = await fetch(
     `${apiInstanceUrl}/einstein/ai-agent/v1/sessions/${sessionId}/messages/stream`,
     {
@@ -96,13 +103,7 @@ export const sendStreamingMessage = async (
         "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`,
       },
-      body: JSON.stringify({
-        message: {
-          sequenceId,
-          type: "Text",
-          text,
-        },
-      }),
+      body: JSON.stringify(payload),
     }
   );
   const data = res.body;
