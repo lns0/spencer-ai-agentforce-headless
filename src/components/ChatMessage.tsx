@@ -12,7 +12,7 @@ export default function ChatMessage({
       <>
         <div className="flex gap-3 pl-5 pr-20 pb-0">
           <Image
-            className="w-8 h-8 rounded-full mt-1"
+            className="w-8 h-8 rounded-full mt-1 drop-shadow-[0_0_8px_#00fff7]"
             width={100}
             height={100}
             src="/images/ai.png"
@@ -21,11 +21,11 @@ export default function ChatMessage({
           {isTyping && message.length === 0 ? (
             <div className="flex items-center gap-2 pb-0">
               <div className="pl-2">
-                <div className="animate-spin h-3 w-3 bg-indigo-300 rounded-sm"></div>
+                <div className="animate-spin h-3 w-3 bg-neoncyan rounded-sm shadow-neon"></div>
               </div>
               <div className="px-1">
                 {aiStatus && aiStatus.length > 0 && (
-                  <p className="text-sm font-normal text-slate-500">
+                  <p className="text-sm font-orbitron neon-text">
                     {aiStatus}
                   </p>
                 )}
@@ -35,9 +35,10 @@ export default function ChatMessage({
             <div
               className={
                 isTyping
-                  ? "flex flex-col p-3 border-gray-200 bg-gradient-to-r from-indigo-300 to-blue-300 text-white rounded-l-xl rounded-r-xl "
-                  : "flex flex-col p-3 border-gray-200 bg-gradient-to-r from-indigo-500 to-blue-500 text-white rounded-l-xl rounded-r-xl "
+                  ? "flex flex-col p-3 glass neon-border text-neoncyan font-orbitron animate-gradient-x"
+                  : "flex flex-col p-3 glass neon-border text-neoncyan font-orbitron animate-gradient-x"
               }
+              style={{background: 'linear-gradient(90deg, rgba(0,255,247,0.12) 0%, rgba(255,0,234,0.10) 100%)'}}
             >
               <p className="text-sm font-extralight whitespace-pre-wrap">
                 {message}
@@ -53,13 +54,13 @@ export default function ChatMessage({
       <>
         <div className="flex flex-row-reverse gap-3 pl-20 pr-5">
           <Image
-            className="w-8 h-8 rounded-full mt-1"
+            className="w-8 h-8 rounded-full mt-1 drop-shadow-[0_0_8px_#ff00ea]"
             width={100}
             height={100}
             src="/images/user.png"
             alt={type}
           />
-          <div className="flex flex-col p-3 border-gray-200 bg-gray-100 rounded-l-xl rounded-r-xl ">
+          <div className="flex flex-col p-3 glass border border-neonpink text-neonpink font-sharetech animate-gradient-x" style={{background: 'linear-gradient(90deg, rgba(255,0,234,0.10) 0%, rgba(0,255,247,0.12) 100%)'}}>
             <p className="text-sm font-extralight whitespace-pre-wrap">
               {message}
             </p>

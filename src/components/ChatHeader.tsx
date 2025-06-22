@@ -14,8 +14,8 @@ export default function ChatHeader() {
   };
 
   return (
-    <div className="flex w-full py-3 px-6 flex-row-reverse">
-      <button className="text-slate-500 text-lg" onClick={clickedEndSession}>
+    <div className="glass flex w-full py-3 px-6 flex-row-reverse rounded-b-2xl shadow-neon border-b border-neoncyan">
+      <button className="text-neoncyan text-2xl font-orbitron hover:text-neonpink focus:text-neonpink transition-all duration-200 drop-shadow-[0_0_8px_#00fff7]" onClick={clickedEndSession}>
         <span>✕</span>
       </button>
     </div>

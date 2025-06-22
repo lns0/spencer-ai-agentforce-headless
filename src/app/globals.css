@@ -1,14 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Share+Tech+Mono&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0f172a;
+  --foreground: #e0e7ef;
+  --neon-cyan: #00fff7;
+  --neon-pink: #ff00ea;
+  --glass: rgba(30,41,59,0.7);
+  --border-glow: 0 0 8px #00fff7, 0 0 24px #ff00ea;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: "Noto Sans JP", sans-serif;
+  font-family: 'Orbitron', 'Share Tech Mono', 'Noto Sans JP', sans-serif;
+  min-height: 100vh;
+  background-image: radial-gradient(circle at 20% 20%, rgba(0,255,247,0.08) 0%, transparent 70%),
+    radial-gradient(circle at 80% 80%, rgba(255,0,234,0.08) 0%, transparent 70%);
+}
+
+.glass {
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0,255,247,0.2);
+  box-shadow: var(--border-glow);
+}
+
+.neon-text {
+  color: var(--neon-cyan);
+  text-shadow: 0 0 8px var(--neon-cyan), 0 0 16px var(--neon-pink);
+}
+
+.neon-border {
+  border: 1px solid var(--neon-cyan);
+  box-shadow: var(--border-glow);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  background: #1e293b;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--neon-cyan);
+  border-radius: 8px;
 }

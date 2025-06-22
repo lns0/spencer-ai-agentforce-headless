@@ -118,7 +118,7 @@ export default function ChatContainer() {
   return (
     <>
       <div className="flex-1 overflow-scroll w-full justify-items-center">
-        <div className="flex flex-col gap-4 px-2 w-full md:w-4/5 lg:w-3/5 xl:w-5/8">
+        <div className="glass flex flex-col gap-4 px-2 w-full md:w-4/5 lg:w-3/5 xl:w-5/8 rounded-2xl shadow-neon border border-neoncyan mt-4 mb-4" style={{boxShadow: '0 0 16px #00fff7, 0 0 32px #ff00ea'}}>
           {toShowMessages.map(function (
             { type, message, isTyping, aiStatus },
             idx
