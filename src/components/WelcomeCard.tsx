@@ -1,9 +1,46 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { newSession } from "@/utils/agentforce";
 import ChatPublisher from "@/components/ChatPublisher";
 import Image from "next/image";
+
+const SAMPLE_QUERIES = [
+  "What is Spencer AI?",
+  "What is Agentforce?",
+  "How does Agentforce work with Data Cloud?",
+  "What are the use cases of Agentforce?",
+];
+
+function shuffleArray(array: string[]) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function SampleQueries() {
+  const queries = useMemo(() => shuffleArray(SAMPLE_QUERIES), []);
+  const [idx, setIdx] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIdx((i) => (i + 1) % queries.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [queries.length]);
+  return (
+    <div className="mt-2 mb-6 flex flex-col items-center justify-center">
+      <span className="text-base font-orbitron mb-1 text-white/50 tracking-wide select-none" style={{letterSpacing: '0.04em'}}>
+        You can ask...
+      </span>
+      <span className="text-white/50 font-orbitron text-lg font-bold transition-opacity duration-500 px-4 py-1 rounded select-none" style={{letterSpacing: '0.01em'}}>
+        {queries[idx]}
+      </span>
+    </div>
+  );
+}
 
 export default function WelcomeCard() {
   const [welcomeMessage, setWelcomeMessage] = useState<string>("");
@@ -45,6 +82,7 @@ export default function WelcomeCard() {
             </div>
           )}
         </div>
+        <SampleQueries />
         <div className="flex px-3 pb-14 w-full">
           <ChatPublisher onPostMessage={postedMessage} />
         </div>
