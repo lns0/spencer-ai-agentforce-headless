@@ -31,3 +31,8 @@
 //     }
 //   );
 // }
+
+export function middleware() {
+  // No-op middleware; basic auth is currently disabled.
+  return;
+}
