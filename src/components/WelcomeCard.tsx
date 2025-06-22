@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { newSession } from "@/utils/agentforce";
 import ChatPublisher from "@/components/ChatPublisher";
 import Image from "next/image";

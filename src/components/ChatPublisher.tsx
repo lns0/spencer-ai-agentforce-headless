@@ -5,15 +5,6 @@ type Props = {
   onPostMessage: (message: string) => void;
 };
 
-const SAMPLE_QUERIES = [
-  "What is Spencer AI?",
-  "What is Agentforce?",
-  "How does Agentforce work with Data Cloud?",
-  "What are the use cases of Agentforce?",
-  "What is the difference between Agentforce and other AI agents?",
-  "How do I know if I'm ready to use generative AI in my business?"
-];
-
 export default function ChatPublisher({ onPostMessage }: Props) {
   const [message, setMessage] = useState("");
 
