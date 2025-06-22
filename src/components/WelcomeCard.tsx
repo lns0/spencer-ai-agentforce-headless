@@ -22,8 +22,12 @@ function shuffleArray(array: string[]) {
 }
 
 function SampleQueries() {
-  const queries = useMemo(() => shuffleArray(SAMPLE_QUERIES), []);
+  const [queries, setQueries] = useState(SAMPLE_QUERIES);
   const [idx, setIdx] = useState(0);
+  useEffect(() => {
+    // Only shuffle on the client after mount
+    setQueries(shuffleArray(SAMPLE_QUERIES));
+  }, []);
   useEffect(() => {
     const interval = setInterval(() => {
       setIdx((i) => (i + 1) % queries.length);
